@@ -1,0 +1,17 @@
+type: overpass
+query:
+  15: nwr[amenity=fountain]
+  17: |
+    (
+      nwr[amenity=fountain];
+      nwr[amenity=drinking_water];
+    )
+feature:
+  description: |
+    {{ tagTrans('amenity', tags.amenity) }}
+  markerSign: |
+    {% if tags.amenity == 'fountain' %}
+    ⛲
+    {% elseif tags.amenity == 'drinking_water' %}
+    🚰
+    {% endif %}
