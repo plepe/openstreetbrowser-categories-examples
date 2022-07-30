@@ -1,0 +1,4 @@
+type: overpass
+# From zoom level 15 on, load all nodes, ways and relations with amenity=restaurant.
+query:
+  15: nwr[amenity=restaurant]
