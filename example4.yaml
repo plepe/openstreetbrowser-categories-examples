@@ -1,10 +1,9 @@
 type: overpass
-# Adding a category name (in English: "Example 3")
 name:
-  en: Example 3
+  en: Example 4
+  de: Beispiel 4
 query:
   15: nwr[amenity=fountain]
-  # This query uses a regular expression to match either fountain or drinking_water:
   17: nwr[amenity~"^(fountain|drinking_water)$"]
 feature:
   description: |
@@ -12,16 +11,25 @@ feature:
   # Here, the correct icon for display is read from the 'const' structure
   markerSign: |
     {{ const[tags.amenity].icon }}
-  # We can use different markers depending on the type of item
   markerSymbol: |
     {{ markerPointer({ fillColor: const[tags.amenity].color }) }}
-  # This is for the marker in the listing in the sidebar
   listMarkerSymbol: |
     {{ markerCircle({ fillColor: const[tags.amenity].color }) }}
+info: |
+  <table>
+  {% for value, data in const if data.zoom <= map.zoom %}
+    <tr>
+      <td>{{ markerCircle({ fillColor: data.color }) }}<div class='sign'>{{ data.icon }}</div></td>
+      <td>{{ tagTrans('amenity', value) }}</td>
+    </tr>
+  {% endfor %}
+  </table>
 const:
   fountain:
     icon: ⛲
-    color: '#0000ff' # need to quote, because YAML would treat the color as comment
+    color: '#0000ff'
+    zoom: 15
   drinking_water:
     icon: 🚰
     color: '#007fff'
+    zoom: 17

@@ -1,0 +1,20 @@
+type: overpass
+name: 
+  en: Roads 1 # English name of the category
+query:
+  9: way[highway~"^(motorway|trunk)$"];
+  11: way[highway~"^(motorway|trunk|primary)$"];
+  13: way[highway~"^(motorway|trunk|primary|secondary|tertiary)$"];
+  15: way[highway~"^(motorway|trunk|primary|secondary|tertiary|road|residential)$"];
+feature:
+  description: |
+    {{ tagTrans('highway', tags.highway) }}
+  markerSymbol: # empty, to hide the marker
+  listMarkerSymbol: line # show a line which is generated from the style
+  style:
+    width: 4
+    color: |
+      {% if tags.highway == 'motorway' %}#ff0000
+      {% elseif tags.highway == 'trunk' %}#ff3f00
+      {% elseif tags.highway == 'primary' %}#ff7f00
+      {% else %}#ffff00{% endif %}

@@ -1,0 +1,29 @@
+type: overpass
+name:
+  en: Example 5
+query:
+  15: nwr[amenity=restaurant]
+feature:
+  description: |
+    {{ tagTrans('amenity', tags.amenity) }}
+  # Details are written to the right side of the popup / the box in the list.
+  # tagTransList is a function, which splits the value by ';' and translates
+  # each value individually. They are joined as enumeration.
+  details: |
+    {{ tagTransList('cuisine', tags.cuisine) }}
+filter:
+  cuisine:
+    name: "{{ keyTrans('cuisine') }}"
+    type: select
+    key: cuisine
+    op: has # query semicolon-separated lists
+    values: |
+      {% for value in const.cuisine %}
+      <option value='{{ value }}'>{{ tagTrans('cuisine', value) }}</option>
+      {% endfor %}
+      <option value='-' query='nwr[!cuisine]' weight='1'>{{ trans('empty value') }}</option>
+      <option value='*' query='nwr[cuisine]' weight='1'>Any value</option>
+    # The option will be ordered by text content. Set 'weight' option to override order.
+    # Also, the last two options set an explicit OverpassQL query.
+const:
+  cuisine: ["pizza", "burger", "kebab"]

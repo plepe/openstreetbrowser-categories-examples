@@ -1,0 +1,33 @@
+type: overpass
+name: 
+  en: Roads 2 # English name of the category
+query:
+  9: way[highway~"^(motorway|trunk)$"];
+  11: way[highway~"^(motorway|trunk|primary)$"];
+  13: way[highway~"^(motorway|trunk|primary|secondary|tertiary)$"];
+  15: way[highway~"^(motorway|trunk|primary|secondary|tertiary|road|residential)$"];
+feature:
+  description: |
+    {{ tagTrans('highway', tags.highway) }}
+  markerSymbol: # empty, to hide the marker
+  listMarkerSymbol: line # show a line which is generated from the style
+  style:casing:
+    width: 8
+    color: '#000000'
+    pane: casing # use the predefined 'casing' pane, so that this line is below the 'style'
+  style:
+    width: 4
+    color: |
+      {{ (const[tags.highway]|default(const.default)).color }}
+    text: |
+      {{ tags.name }}
+    textOffset: -8
+const:
+  motorway:
+    color: '#ff0000'
+  trunk:
+    color: '#ff3f00'
+  primary:
+    color: '#ff7f00'
+  default:
+    color: '#ffff00'
